@@ -1,9 +1,8 @@
-import Link from 'next/link'
+import { BASE_URL } from '@/app/utils/constant'
 import React from 'react'
-import { usePathname } from "next/navigation";
 
 async function fetchProducts(id){
-  const resp = await fetch(`https://fakestoreapi.com/products/${id}`,{cache: "no-store"})
+  const resp = await fetch(`${BASE_URL}products/${id}`)
   return resp.json()
 }
 
@@ -12,7 +11,7 @@ export async function generateMetadata({params}){
   return{ 
   title: product.title,
   description: product.description,
-  thumbnail: product.image,
+  thumbnail: product.images,
   metadataBase: new URL('https://istad.co'),
   alternates: {
     canonical: '/',
@@ -32,61 +31,62 @@ export async function generateMetadata({params}){
 export default async function ProductDetail({params}) {
   
     const{id} = params
-    const product = await fetchProducts(id)
-    // const pathname = usePathname();
+    const pro = await fetchProducts(id)
+    
   return (
 
 
-<main className="flex min-h-max flex-col items-center justify-between p-24 bg-emerald-100"
-style={{height:"690px"}}
->
-  {/* <div className="mt-auto">
-        <Link
-          href="#"
-          class="flex flex-col items-center bg-white hover:animate-background bg-gradient-to-r from-green-300 via-blue-400 to-purple-500 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s] rounded-xl  md:flex-row md:max-w-sm"
-        >
-          <img
-            class="object-cover w-9/12 rounded-t-lg h-100 md:h-auto md:w-72 md:rounded-none md:rounded-l-lg"
-            src={product.image}
-            alt=""
-            style={{width:"40"}}
-          />
-          <div class="flex flex-col justify-between p-6 leading-normal">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {product.title}
-            </h5>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              {product.description}
-            </p>
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-emerald-100">
+      
+    <div className="flex flex-col justify-center h-fit ">
+          <div
+            className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white">
+            <div className="w-full md:w-1/3 bg-white grid place-items-center">
+              <img src={pro.category.image} alt="tailwind logo" className="rounded-xl" />
+            </div>
+            <div className="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3">
+              <div className="flex justify-between item-center">
+                <p className="text-gray-500 font-medium hidden md:block">
+                 {pro.category.name}
+                </p>
+                <div className="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-yellow-500" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <p className="text-gray-600 font-bold text-sm ml-1">
+                    4.96
+                    <span className="text-gray-500 font-normal">(76 reviews)</span>
+                  </p>
+                </div>
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-pink-500" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div className="bg-gray-200 px-3 py-1 rounded-full text-xs font-medium text-gray-800 hidden md:block">
+                  Superhost</div>
+              </div>
+              <h3 className="font-black text-gray-800 md:text-3xl text-xl">
+                {pro.title}
+              </h3>
+              <p className="md:text-lg text-gray-500 text-base">
+                {pro.description}
+              </p>
+              <p className="text-xl font-black text-gray-800">
+                ${pro.price}
+                <span className="font-normal text-gray-600 text-base">/pure</span>
+              </p>
+            </div>
           </div>
-        </Link>
-        </div> */}
-
-
-<Link href="/" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
-style={{height: "600px" , width: "950px"}}
->
-    <img class="object-cover w-9/12 rounded-t-lg h-100 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={product.image} alt=""/>
-    <div class="flex flex-col justify-between p-4 leading-norbgmal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {product.title}
-        </h5>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {product.description}
-        </p>
-        {/* <Link href="/about"
-                className={
-                  pathname === "/about"
-                    ? "block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                    : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                } class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        style={{float: "right", width: "140px"}}>
-          Start to Pay
-        </Link> */}
+        </div>
+      
+    </main>
         
-    </div>
-</Link>
-      </main>
-
+      
   )
 }
