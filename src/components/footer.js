@@ -85,6 +85,5 @@ export default function Footer() {
       </div>
       <div className="py-6 text-sm text-center dark:text-gray-400" bis_skin_checked="1">© 2023 SBL Company Co. All rights reserved.</div>
     </footer>
-
   )
 }
