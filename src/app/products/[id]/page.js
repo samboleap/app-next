@@ -87,6 +87,8 @@ export default async function ProductDetail({params}) {
       
     </main>
         
+
+    
       
   )
 }
